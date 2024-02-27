@@ -1,0 +1,27 @@
+.header-logo{
+    font-size: 36px;
+    line-height: 120%;
+}
+.first-char{
+    font-size: 40px;
+    color:black;
+    font-weight: 700;
+}
+.second-char{
+    font-size: 40px;
+    color:green;
+    font-weight: 700;
+}
+.header-btn{
+    padding: 10px 20px;
+    background: #4abaff;
+    color:white;
+    text-decoration: none;
+    transition: all 0.2s ease-in;
+}
+.header-btn:last-child{
+    margin-left: 10px;
+}
+.header-btn:hover{
+    background: #3c8dbe;
+}
