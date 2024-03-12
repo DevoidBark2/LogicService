@@ -1,0 +1,35 @@
+.order_item{
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 1px solid #dee2e6;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.order_item:hover{
+    cursor: pointer;
+    box-shadow: 0 6px 15px -4px rgba(180, 180, 180, 0.94);
+    -webkit-box-shadow: 0 6px 15px -4px rgba(180, 180, 180,0.94);
+    -moz-box-shadow: 0 6px 15px -4px rgba(180, 180, 180,0.94);
+ }
+.order_link{
+    text-decoration: none;
+}
+.order_number{
+    color: #9a9a9b;
+    font-weight: 700;
+}
+.order_price{
+    margin-top: 10px;
+}
+.order_price span{
+    color:black;
+    margin-right: 5px;
+}
+.order_route{
+    color:black;
+    margin-left: 10px;
+}
+.order_time{
+    margin-bottom: 0;
+    color: #9fa0a1;
+}

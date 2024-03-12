@@ -1,0 +1,50 @@
+.space-input{
+    display: none;
+}
+.inputs-group{
+    width: 50%!important;
+}
+.modal-input-block:last-child{
+    margin-top: 10px;
+}
+.customer-data{
+    font-size: 16px;
+    margin-left: 10px;
+    background-color: rgb(201, 201, 201);
+    border-radius: 20px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+.customer_phone{
+    text-decoration: none;
+    color:black;
+    margin-left: 10px;
+}
+.customer_phone:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+@media (max-width: 992px) {
+    .delete-order{
+        margin-left: 10px!important;
+    }
+    .move-truck-block{
+        display: none!important;
+    }
+    .space-input{
+        display: block;
+    }
+}
+
+@media (max-width: 500px) {
+    .order-details-block{
+        flex-direction: column;
+    }
+    .modal-input-block{
+        flex-direction: column;
+    }
+    .inputs-group{
+        width: 100%!important;
+    }
+}

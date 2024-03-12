@@ -1,0 +1,7 @@
+.tel_phone{
+    text-decoration: none!important;
+    color: #989898;
+}
+.tel_phone:hover{
+    text-decoration: underline!important;
+}

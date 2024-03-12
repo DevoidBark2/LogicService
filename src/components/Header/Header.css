@@ -25,3 +25,46 @@
 .header-btn:hover{
     background: #3c8dbe;
 }
+.header-content{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.menu-items-small{
+    display: none;
+}
+.logout-icon:hover{
+    cursor: pointer;
+}
+.header-user_name:hover{
+    text-decoration: underline!important;
+}
+@media (max-width: 990px) {
+    .header_menu{
+        display: flex;
+        gap: 4px;
+    }
+    .header-logo img{
+        width: 80px;
+        height: 55px;
+    }
+    .order_item{
+        margin: 0!important;
+        margin-bottom: 10px!important;
+        margin-top: 10px!important;
+    }
+    .menu-items-small{
+        display: block;
+    }
+    .menu-items-large{
+        display: none;
+    }
+}
+@media (max-width: 400px) {
+    .header-logo img{
+        width: 60px;
+        height: 35px;
+    }
+    .header-logo h3{
+        font-size: 16px;
+    }
+}

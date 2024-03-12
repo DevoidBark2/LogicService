@@ -1,0 +1,48 @@
+.admin_link{
+    text-decoration: none;
+    color: white;
+    margin-left: 20px;
+}
+.admin_nuvbar{
+    padding: 20px!important;
+}
+.admin_link:hover{
+    color: #7b7bd9
+}
+.admin_link-active{
+    color: #7b7bd9
+}
+.menu-items-small{
+    display: none;
+}
+.menu-items-large{
+    display: block;
+}
+@media (max-width: 990px) {
+    .header_menu{
+        display: flex;
+        gap: 4px;
+    }
+    .header-logo img{
+        width: 80px;
+        height: 55px;
+    }
+    .order_item{
+        margin: 0!important;
+        margin-bottom: 10px!important;
+        margin-top: 10px!important;
+    }
+    .menu-items-small{
+        display: block;
+    }
+    .burger-menu .admin_link{
+        background-color: #0d6efd;
+        padding: 10px;
+        margin-left: 0;
+        margin-bottom: 10px;
+        border-radius: 5px;
+    }
+    .menu-items-large{
+        display: none;
+    }
+}

@@ -1,0 +1,9 @@
+@media (max-width: 700px) {
+    .diagrams-block{
+        flex-direction: column;
+    }
+    .line-bar{
+        max-height: 400px!important;
+        max-width: 400px!important;
+    }
+}

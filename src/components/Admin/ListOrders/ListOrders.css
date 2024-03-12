@@ -1,0 +1,15 @@
+.user-link{
+    text-decoration: none;
+    color: black;
+}
+.user-link span:hover{
+    background: #b6b6b6!important;
+}
+@media (max-width: 380px) {
+    .title-block{
+        margin-bottom: 5px;
+    }
+    .title-block h1{
+        font-size: 20px;
+    }
+}

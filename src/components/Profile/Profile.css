@@ -1,0 +1,85 @@
+.orders-list{
+    height: calc(100vh - 400px);
+    overflow: auto;
+}
+.orders-list::-webkit-scrollbar {
+    width: 10px;
+}
+.orders-list::-webkit-scrollbar-thumb {
+    background-color: #e1e1e1;
+    border-radius: 5px;
+}
+.orders-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 8px;
+}
+.orders-list::-webkit-scrollbar-button {
+    display: none;
+}
+
+.move-truck-block{
+    position: relative;
+}
+.truck-icon{
+    bottom: 10px;
+    left: 5px;
+    position: absolute;
+    animation: moveIcon 10s linear infinite;
+}
+.profile-block{
+    display: flex;
+    flex-wrap: wrap;
+}
+.orders-list .order_item{
+    margin-left: 15px!important;
+    margin-right: 15px!important;
+}
+@keyframes moveIcon {
+    0%, 100% {
+        transform: translateX(0) scaleX(-1);
+    }
+    50% {
+        transform: translateX(300px) scaleX(-1);
+    }
+}
+
+.color-changing-lines {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+}
+
+.line {
+    height: 2px;
+    width: 100%;
+    margin-bottom: 5px;
+    animation: colorChange 8s infinite;
+}
+
+@keyframes colorChange {
+    0% {
+        background-color: red;
+    }
+    25% {
+        background-color: blue;
+    }
+    50% {
+        background-color: green;
+    }
+    75% {
+        background-color: orange;
+    }
+    100% {
+        background-color: red;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-data-form{
+        display: flex!important;
+        flex-direction: column;
+    }
+    .profile-item{
+        width: 100%;
+    }
+}

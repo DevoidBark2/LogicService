@@ -1,10 +1,9 @@
 import "./Order.css";
 import {Link} from "react-router-dom";
 const Order = ({order}) => {
-    const { id, price, route } = order;
-    const [city1, city2] = route.split('-');
+    const { id, price, from,to } = order;
 
-    const googleMapsUrl = `https://www.google.com/maps/dir/${city1}/${city2}`;
+    const googleMapsUrl = `https://www.google.com/maps/dir/${from}/${to}`;
     return(
         <>
             <Link to={googleMapsUrl} target="_blank">Посмотреть маршрут</Link>
@@ -15,7 +14,7 @@ const Order = ({order}) => {
                         <h3>Заказ №{id}</h3>
                         <p>Выручка: {price}</p>
                     </div>
-                    <h4>Маршрут: {route}</h4>
+                    <h4>Маршрут: {from} - {to}</h4>
                 </div>
             </Link>
         </>
