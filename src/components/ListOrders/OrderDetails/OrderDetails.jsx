@@ -37,7 +37,7 @@ const OrderDetails = () => {
         })
 
         const data = await response.json();
-
+        debugger
         if(data.success){
             setFrom(data.order.from);
             setTo(data.order.to);
@@ -47,7 +47,15 @@ const OrderDetails = () => {
             const customerData = data.user;
             setCustomerData(`${customerData.firstName} ${customerData.lastName}`)
             setCustomerPhone(customerData.phoneNumber)
-            setCustomerId(data.order.customerId)
+            const userData = localStorage.getItem("user");
+            if (userData) {
+                const parsedUserData = JSON.parse(userData);
+                const { id } = parsedUserData;
+                if(data.order.customerId === id){
+                    setCustomerId(data.order.customerId)
+                }
+            }
+
             const orderDate = new Date(data.order.date);
             setDate(orderDate);
         }

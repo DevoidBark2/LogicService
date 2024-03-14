@@ -105,12 +105,24 @@ const ListOrders = () => {
                                         <h3>Новый заказ</h3>
                                         {error && <span style={{fontSize:"14px",color:"red",marginLeft:"10px"}}>{error}</span>}
                                     </div>
-                                    <Form.Select aria-label="Default select example" placeholder="Выберите заказчика"  onChange={handleUserSelect}>
-                                        <option value="">Выберите заказчика</option>
-                                        {users.map(user => (
-                                            <option value={user.id}>{user.secondName} {user.firstName.slice(0,1)}.  ({user.role === "logist" ? "Логист" : "Перевозчик"})</option>
-                                        ))}
-                                    </Form.Select>
+                                    <div className="d-flex align-items-center justify-content-between">
+                                        <Form.Select aria-label="Default select example" placeholder="Выберите заказчика" onChange={handleUserSelect}>
+                                            <option value="">Выберите заказчика</option>
+                                            {users.filter(user => user.role === "logist").map(logist => (
+                                                <option key={logist.id} value={logist.id}>
+                                                    {logist.secondName} {logist.firstName.slice(0, 1)}.
+                                                </option>
+                                            ))}
+                                        </Form.Select>
+                                        <Form.Select aria-label="Default select example" placeholder="Выберите исполнителя" onChange={handleUserSelect}>
+                                            <option value="">Выберите исполнителя</option>
+                                            {users.filter(user => user.role === "carrier").map(carrier => (
+                                                <option key={carrier.id} value={carrier.id}>
+                                                    {carrier.secondName} {carrier.firstName.slice(0, 1)}.
+                                                </option>
+                                            ))}
+                                        </Form.Select>
+                                    </div>
                                 </div>
                                 {selectedUser && (
                                    <Link to={`/admin/list-users/${selectedUser.id}`} style={{textDecoration:"none",color:"black"}} className="user-link">

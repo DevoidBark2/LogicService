@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from "react";
 import "./ListUsers.css"
 import {Button, Modal, Table} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 const ListUsers = () => {
 
     const [users,setUsers] = useState([])
     const [deleteUserModal,setDeleteUserModal] = useState(false)
+    const [userId,setUserId] = useState(0)
+    const router = useNavigate();
     const getAllUsers = async () => {
         const response = await fetch('http://localhost:5177/getAllData',{
             method: "GET"
@@ -18,7 +20,30 @@ const ListUsers = () => {
         }
     }
 
-    const deleteUser = () => {}
+    const deleteUser = async () => {
+
+        const requestBody = {
+            userId : userId
+        }
+        const response = await fetch("http://localhost:5177/deleteUser",{
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        })
+
+        const data = await response.json();
+
+        if(data.success){
+            router('list-users')
+        }
+    }
+
+    const handleDeleteUser = (id) => {
+        setUserId(id)
+        setDeleteUserModal(true)
+    }
 
     useEffect(() => {
         getAllUsers();
@@ -51,7 +76,7 @@ const ListUsers = () => {
                                 <Link to={`${user.id}`}>
                                     <img src="/static/view_user.svg" alt="Посмотреть данные пользователя" width={30} height={30} style={{marginRight:"10px"}}/>
                                 </Link>
-                                <img src="/static/delete_user.svg" alt="удалить данные пользователя" width={30} height={30} onClick={() => setDeleteUserModal(true)} />
+                                <img src="/static/delete_user.svg" alt="удалить данные пользователя" width={30} height={30} onClick={() => handleDeleteUser(user.id)} />
                             </td>
                         </tr>
                     )
@@ -74,7 +99,7 @@ const ListUsers = () => {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <p>Вы уверены что хотите удалить пользователя?</p>
+                    <p>Вы уверены что хотите удалить пользователя #{userId}?</p>
                 </Modal.Body>
                 <Modal.Footer>
                     <button type="submit" className="btn btn-danger" onClick={deleteUser}>Удалить</button>
