@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {Form} from "react-bootstrap"
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -9,6 +10,8 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        setError('')
 
         const requestBody = {
             email: email,
@@ -52,7 +55,7 @@ const Login = () => {
                             required
                         />
                     </div>
-                    <div className="form-group mb-2">
+                    <div className="form-group mb-4">
                         <label htmlFor="exampleInputPassword1">Пароль</label>
                         <input
                             type="password"
@@ -64,7 +67,7 @@ const Login = () => {
                             required
                         />
                     </div>
-                    {error && <span className="alert alert-danger mt-2">{error}</span>}
+                    {error && <span className="alert alert-danger mt-5">{error}</span>}
                     <div className="d-flex flex-column">
                         <button type="submit" className="btn btn-primary mt-4">Войти</button>
                     </div>

@@ -23,7 +23,6 @@ const Register = () => {
 
         const formattedPhone = formatPhone(phone);
 
-        debugger;
         if (formattedPhone.length !== 18) {
             setError('Некорректный формат телефона!');
             return;
@@ -51,7 +50,6 @@ const Register = () => {
             body: JSON.stringify(requestBody)
         });
 
-        debugger
         if (!response.ok) {
             const errorText = await response.text();
             setError(errorText)

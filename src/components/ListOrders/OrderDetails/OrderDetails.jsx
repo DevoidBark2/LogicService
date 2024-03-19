@@ -25,8 +25,12 @@ const OrderDetails = () => {
     const [customerData,setCustomerData] = useState('')
     const [customerPhone,setCustomerPhone] = useState('')
     const [customerId,setCustomerId] = useState(0)
+    const [carrierUser,setCarrierUser] = useState(null)
+    const [carrierId,setCarrierId] = useState(null)
+    const [loading,setLoading] = useState(false)
 
     const getOrderData = async () => {
+        setLoading(true)
         const response = await fetch(`http://localhost:5177/getOrderData?orderId=${orderId}`,{
             method: "GET",
             headers: {
@@ -37,7 +41,7 @@ const OrderDetails = () => {
         })
 
         const data = await response.json();
-        debugger
+
         if(data.success){
             setFrom(data.order.from);
             setTo(data.order.to);
@@ -47,6 +51,10 @@ const OrderDetails = () => {
             const customerData = data.user;
             setCustomerData(`${customerData.firstName} ${customerData.lastName}`)
             setCustomerPhone(customerData.phoneNumber)
+            if(data.carrierUser !== {}){
+                setCarrierUser({firstName: data.carrierUser.firstName, secondName: data.carrierUser.secondName,phone:  data.carrierUser.phone})
+                setCarrierId(data.carrierUser.id)
+            }
             const userData = localStorage.getItem("user");
             if (userData) {
                 const parsedUserData = JSON.parse(userData);
@@ -58,6 +66,7 @@ const OrderDetails = () => {
 
             const orderDate = new Date(data.order.date);
             setDate(orderDate);
+            setLoading(false)
         }
     }
 
@@ -148,7 +157,6 @@ const OrderDetails = () => {
             customerId : userId
         }
 
-        debugger
         const response = await fetch("http://localhost:5177/addNewOrder",{
             method: "POST",
             headers: {
@@ -156,9 +164,7 @@ const OrderDetails = () => {
             },
             body: JSON.stringify(requestBody)
         })
-        //поменять теперь в заказа будет customerId и carrierId(тот кто взял)
 
-        debugger
         const data = await response.json();
 
         if(data.success){
@@ -173,7 +179,6 @@ const OrderDetails = () => {
             carrierId: userId
         }
 
-        debugger
         const response = await fetch("http://localhost:5177/deleteCustomerOrder",{
             method:"POST",
             headers: {
@@ -190,7 +195,6 @@ const OrderDetails = () => {
     }
 
     useEffect(() => {
-
         const userData = localStorage.getItem("user");
         if (userData) {
             const parsedUserData = JSON.parse(userData);
@@ -198,22 +202,15 @@ const OrderDetails = () => {
             setUserId(id);
             setUserRole(role)
         }
-        //
-        // if(userOrderId === orderId){
-        //     redirect(`/profile/order/${orderId}`)
-        // }
 
         getOrderData();
     },[orderId])
 
-    console.log(pathName)
-    console.log(pathName.toString().includes('/profile'))
     const tooltip = (
         <Tooltip id="tooltip">
             <strong>Нажмите,</strong> чтобы посмотреть маршрут.
         </Tooltip>
     );
-
 
     return(
         <div className="container mt-3">
@@ -352,11 +349,22 @@ const OrderDetails = () => {
                    }
                </div>
                 {
+                    !pathName.pathname.includes('/profile') && carrierUser?.firstName ? <div className="d-flex" style={{marginLeft:"10px"}}>
+                        <div className="customer-data">
+                            <span>Исполнитель: </span>
+                            <img src="/static/user_icon.svg" alt="Иконка пользователя" width="20" height="20" style={{marginLeft:"10px"}}/>
+                            <div>
+                                <span style={{fontWeight:"600",marginLeft:"5px"}}>{carrierUser?.firstName} {carrierUser?.secondName}</span>
+                            </div>
+                        </div>
+                    </div> : ''
+                }
+                {
                     (userRole === "carrier" && customerId !== 0 && pathName.pathname.includes("/profile")) && <button  type="button" className="btn btn-danger" onClick={deleteCarrierOrder}>Удалить заказ</button>
                 }
                 {
-                    userRole !== "admin" && (!pathName.pathname.includes('/profile') && userRole !== "logist") &&
-                    <button  type="button" className={`btn ${customerId !== 0 ? "btn-danger" : "btn-warning"}`} onClick={customerId === 0 ? addNewOrder : deleteCarrierOrder}>{customerId !== 0 ? 'Удалить заказ' : 'Взять заказ'}</button>
+                    loading === false && (!carrierUser?.firstName && (userRole !== "admin" && (!pathName.pathname.includes('/profile') && userRole !== "logist"))) ?
+                    <button type="button" className="btn btn-warning" onClick={addNewOrder}>Взять заказ</button> : ''
                 }
                 {pathName.pathname.includes('/profile') && userRole === "logist" && <div className="d-flex align-items-center justify-content-end">
                     <button type="button" className="btn btn-warning" onClick={() => setIsModalOpen(true)}>Изменить</button>

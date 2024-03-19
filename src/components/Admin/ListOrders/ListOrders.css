@@ -5,11 +5,27 @@
 .user-link span:hover{
     background: #b6b6b6!important;
 }
+.select-customer{
+    margin-left: 10px;
+}
 @media (max-width: 380px) {
     .title-block{
         margin-bottom: 5px;
     }
     .title-block h1{
         font-size: 20px;
+    }
+}
+
+@media (max-width: 530px) {
+    .select-top-order{
+        flex-direction: column;
+        justify-content: center;
+    }
+    .select-customer{
+        margin-left: 0;
+    }
+    .select-carrier{
+        margin-bottom: 10px;
     }
 }

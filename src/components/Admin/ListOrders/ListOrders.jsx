@@ -14,19 +14,25 @@ const ListOrders = () => {
     const [date,setDate] = useState(new Date())
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [error,setError] = useState('')
-    const [selectedUser, setSelectedUser] = useState(null);
+    const [customerUser, setCustomerUser] = useState(null);
+    const [carrierUser, setCarrierUser] = useState(null);
 
-    const handleUserSelect = (event) => {
+    const handleCustomerSelect = (event) => {
         const selectedUserId = parseInt(event.target.value);
         const user = users.find(user => user.id === selectedUserId);
-        setSelectedUser(user);
+        setCustomerUser(user);
     };
+
+    const handleCarrierSelect = (event) => {
+        const selectedUserId = parseInt(event.target.value);
+        const user = users.find(user => user.id === selectedUserId);
+        setCarrierUser(user);
+    }
     const getAllOrders = async () => {
         const response = await fetch('http://localhost:5177/getOrders',{
             method: "GET"
         })
 
-        debugger
         const data = await response.json()
 
         if(data.success){
@@ -38,9 +44,41 @@ const ListOrders = () => {
     const closeModal = () => {
         setIsModalOpen(false)
     }
-    const createOrder = async () => {
+    const createOrder = async (e) => {
+        e.preventDefault();
+
+        const requestBody = {
+            pointOne:from,
+            pointTwo:to,
+            customerId: customerUser?.id,
+            carrierId: carrierUser?.id ? carrierUser?.id : 0,
+            price:price,
+            date:date.toISOString(),
+            comment: comment
+        }
+
+        await fetch('http://localhost:5177/addNewOrderAdmin',{
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        })
+
+        setIsModalOpen(false)
+
+        getAllOrders();
 
     }
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const day = date.getDate();
+        const month = date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
+        const year = date.getFullYear();
+
+        return `${day}.${month}.${year}`;
+    };
 
     useEffect(() => {
         getAllOrders()
@@ -62,6 +100,7 @@ const ListOrders = () => {
                     <th>Откуда</th>
                     <th>Куда</th>
                     <th>Выручка</th>
+                    <th>Дата</th>
                     <th>Действия</th>
                 </tr>
                 </thead>
@@ -72,6 +111,7 @@ const ListOrders = () => {
                         <td>{order.from}</td>
                         <td>{order.to}</td>
                         <td>{order.price}</td>
+                        <td>{formatDate(order.date)}</td>
                         <td className="d-flex justify-content-end">
                             <Link to={`${order.id}`}>
                                 <img src="/static/view_user.svg" alt="Посмотреть данные пользователя" width={30} height={30} style={{marginRight:"10px"}}/>
@@ -105,8 +145,8 @@ const ListOrders = () => {
                                         <h3>Новый заказ</h3>
                                         {error && <span style={{fontSize:"14px",color:"red",marginLeft:"10px"}}>{error}</span>}
                                     </div>
-                                    <div className="d-flex align-items-center justify-content-between">
-                                        <Form.Select aria-label="Default select example" placeholder="Выберите заказчика" onChange={handleUserSelect}>
+                                    <div className="d-flex align-items-center justify-content-between select-top-order">
+                                        <Form.Select required className="select-carrier" aria-label="Default select example" placeholder="Выберите заказчика" onChange={handleCustomerSelect}>
                                             <option value="">Выберите заказчика</option>
                                             {users.filter(user => user.role === "logist").map(logist => (
                                                 <option key={logist.id} value={logist.id}>
@@ -114,7 +154,7 @@ const ListOrders = () => {
                                                 </option>
                                             ))}
                                         </Form.Select>
-                                        <Form.Select aria-label="Default select example" placeholder="Выберите исполнителя" onChange={handleUserSelect}>
+                                        <Form.Select className="select-customer" aria-label="Default select example" placeholder="Выберите исполнителя" onChange={handleCarrierSelect}>
                                             <option value="">Выберите исполнителя</option>
                                             {users.filter(user => user.role === "carrier").map(carrier => (
                                                 <option key={carrier.id} value={carrier.id}>
@@ -124,22 +164,15 @@ const ListOrders = () => {
                                         </Form.Select>
                                     </div>
                                 </div>
-                                {selectedUser && (
-                                   <Link to={`/admin/list-users/${selectedUser.id}`} style={{textDecoration:"none",color:"black"}} className="user-link">
-                                        <span style={{fontSize:"16px",marginLeft:"10px",backgroundColor:"#c9c9c9",borderRadius:"20px",padding:"10px"}}>
-                                        <img src="/static/user_icon.svg" alt="Иконка пользователя" width={20} height={20} style={{marginRight:"10px"}}/>
-                                            {selectedUser.firstName} {selectedUser.secondName}
-                                    </span>
-                                   </Link>
-                                )}
                             </div>
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <div className="d-flex justify-content-between mt-3 align-items-center">
-                            <InputGroup className="mb-3 w-50">
-                                <InputGroup.Text id="basic-addon1" required><img src="/static/geo.svg" width={20} height={20} alt="Geo"/></InputGroup.Text>
+                        <div className="d-flex justify-content-between mt-3 align-items-center modal-input-block">
+                            <InputGroup className="mb-3 inputs-group">
+                                <InputGroup.Text id="basic-addon1"><img src="/static/geo.svg" width={20} height={20} alt="Geo"/></InputGroup.Text>
                                 <Form.Control
+                                    required
                                     placeholder="Точка А"
                                     aria-label="Username"
                                     aria-describedby="basic-addon1"
@@ -147,13 +180,15 @@ const ListOrders = () => {
                                     onChange={(e) => setFrom(e.target.value)}
                                 />
                             </InputGroup>
-                            <div className="d-flex flex-column move-truck-block">
+                            <div className="flex-column move-truck-block">
                                 <img src="/static/truck.svg" alt="Иконка" className="truck-icon" width={40} height={40} />
                                 <hr style={{width:'350px',borderStyle:'dashed'}}/>
                             </div>
-                            <InputGroup className="mb-3 w-50">
-                                <InputGroup.Text id="basic-addon1" required={true}><img src="/static/geo.svg" width={20} height={20} alt="Geo"/></InputGroup.Text>
+                            <div className="w-25 space-input"></div>
+                            <InputGroup className="mb-3 inputs-group">
+                                <InputGroup.Text id="basic-addon1"><img src="/static/geo.svg" width={20} height={20} alt="Geo"/></InputGroup.Text>
                                 <Form.Control
+                                    required
                                     placeholder="Точка Б"
                                     aria-label="Username"
                                     aria-describedby="basic-addon1"
@@ -162,10 +197,11 @@ const ListOrders = () => {
                                 />
                             </InputGroup>
                         </div>
-                        <div className="d-flex">
-                            <InputGroup className="mb-3 w-50">
+                        <div className="d-flex modal-input-block">
+                            <InputGroup className="mb-3 inputs-group">
                                 <InputGroup.Text id="basic-addon1"  required><img src="/static/rubel-icon.svg" alt="Валюта" width={20} height={20}/></InputGroup.Text>
                                 <Form.Control
+                                    required
                                     placeholder="Стоимость перевозки"
                                     aria-label="Username"
                                     aria-describedby="basic-addon1"
@@ -174,12 +210,16 @@ const ListOrders = () => {
                                 />
                             </InputGroup>
                             <div className="w-25"></div>
-                            <Form.Group controlId="date" className="w-50" required>
+                            <Form.Group controlId="date" className="inputs-group mb-3">
                                 <Form.Control
+                                    required
                                     type="date"
                                     name="date"
-                                    value={date.toISOString()}
-                                    onChange={(e) => setDate(e.target.value)}
+                                    value={date.toISOString().split('T')[0]}
+                                    onChange={(e) => {
+                                        const newDate = new Date(e.target.value);
+                                        setDate(newDate);
+                                    }}
                                 />
                             </Form.Group>
                         </div>

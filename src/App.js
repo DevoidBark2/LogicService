@@ -20,10 +20,15 @@ function App() {
     const {pathname} = useLocation();
     const [role,setUserRole] = useState('carrier')
     const [show, setShow] = useState(false);
+    const router = useNavigate();
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const handleLogout = () => {
+        localStorage.removeItem("user")
+        router('/')
+    }
 
     const renderHeader = () => {
         if (window.location.pathname.includes('admin')) {
@@ -37,6 +42,8 @@ function App() {
                                 <Link to="/admin/list-users" className={`admin_link`}>Пользователи</Link>
                                 <Link to="/admin/list-orders"  className={`admin_link`}>Заказы</Link>
                             </Nav>
+
+                            <button className="btn btn-danger" onClick={handleLogout}>Выйти</button>
                         </Container>
                     </Navbar>
                 </div>
@@ -74,7 +81,31 @@ function App() {
         </div>;
     };
 
+    const checkUser = async () => {
+        const userData = localStorage.getItem("user");
+        if (userData) {
+            const parsedUserData = JSON.parse(userData);
+            const { id } = parsedUserData;
+
+            const response = await fetch('http://localhost:5177/checkUser',{
+                method:"POST",
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({userId:id})
+            })
+
+            const data = await response.json();
+
+            if(!data.success){
+                localStorage.removeItem("user")
+                router('/login')
+            }
+        }
+    }
+
     useEffect(() => {
+        checkUser()
         const userData = localStorage.getItem("user");
         if (userData) {
             const parsedUserData = JSON.parse(userData);

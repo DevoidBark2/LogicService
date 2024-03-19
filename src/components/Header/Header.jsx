@@ -7,6 +7,7 @@ const Header = () => {
 
     const [userName, setUserName] = useState('');
     const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
+    const [admin,setAdmin] = useState(false)
     const router = useNavigate();
 
     const handleLogout = () => {
@@ -27,10 +28,13 @@ const Header = () => {
             const { firstName, secondName,role } = parsedUserData;
             const userRole = role === "carrier" ? "Перевозчик" : role === "logist" ? "Логист" : "Админ"
             setUserName(`${firstName} ${secondName} (${userRole})`)
+            if(role === "admin"){
+                setAdmin(true)
+            }
         } else {
             setUserName('')
         }
-    },[userName])
+    },[])
 
     const [show, setShow] = useState(false);
 
@@ -55,7 +59,10 @@ const Header = () => {
                 <div className="menu-items-large">
                     {userName !== '' ?
                         <div className="d-flex align-items-center justify-content-between">
-                            <Link to="/profile" style={{textDecoration:"none",color:"black",marginRight:"10px"}} className="header-user_name">{userName}</Link>
+                           <div className="d-flex flex-column justify-content-end">
+                               <Link to="/profile" style={{textDecoration:"none",color:"black",marginRight:"10px"}} className="header-user_name">{userName}</Link>
+                               { admin && <Link to="/admin" style={{textDecoration:"none",color:"black",marginRight:"10px"}} className="header-user_name">Админ панель</Link>}
+                           </div>
                             <OverlayTrigger placement="left" overlay={tooltip}>
                                 <img src="/static/logout_icon.svg" alt="Выйти" width={30} height={30} onClick={handleLogout} className="logout-icon"/>
                             </OverlayTrigger>

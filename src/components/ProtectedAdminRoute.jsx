@@ -10,7 +10,7 @@ const ProtectedAdminRoute = ({ children }) => {
     const { role } = parsedUserData;
 
     if(role !== 'admin'){
-        return <Navigate to="/login"/>
+        return <Navigate to="/"/>
     }
 
     return children

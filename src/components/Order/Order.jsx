@@ -5,7 +5,6 @@ const Order = ({order}) => {
 
     const formattedDate = new Date(order.date).toLocaleDateString('ru-RU'); // Преобразование даты в формат дд.мм.гггг
 
-    console.log(order)
     return(
         <div key={order.id} className="order_item">
            <Link to={`order/${order.id}`} className="order_link">

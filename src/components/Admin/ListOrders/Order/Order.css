@@ -1,0 +1,20 @@
+@media (max-width: 768px) {
+    .order-title{
+        font-size: 30px;
+    }
+}
+@media (max-width: 768px) {
+    .btn-add-carrier{
+        display: flex;
+        justify-content: center;
+    }
+}
+@media (max-width: 540px) {
+    .order-title{
+        font-size: 20px;
+    }
+    .customer-data{
+        margin-left: 0;
+        font-size: 13px;
+    }
+}

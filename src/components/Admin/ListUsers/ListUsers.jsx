@@ -36,8 +36,10 @@ const ListUsers = () => {
         const data = await response.json();
 
         if(data.success){
-            router('list-users')
+            router('/admin/list-users')
         }
+        setDeleteUserModal(false)
+        getAllUsers();
     }
 
     const handleDeleteUser = (id) => {

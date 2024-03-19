@@ -3,3 +3,26 @@
     /*    width: 100px!important;*/
     /*}*/
 }
+@media (max-width: 992px) {
+    .delete-order{
+        margin-left: 10px!important;
+    }
+    .move-truck-block{
+        display: none!important;
+    }
+    .space-input{
+        display: block;
+    }
+}
+
+@media (max-width: 500px) {
+    .order-details-block{
+        flex-direction: column;
+    }
+    .modal-input-block{
+        flex-direction: column;
+    }
+    .inputs-group{
+        width: 100%!important;
+    }
+}

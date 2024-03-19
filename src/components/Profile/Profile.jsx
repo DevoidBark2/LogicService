@@ -4,19 +4,9 @@ import {formatPhone} from "../../utils";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css"
 import {Button, InputGroup, Modal, Form} from "react-bootstrap";
-import { CurrencyDollar } from 'react-bootstrap-icons';
 import Order from "../Order/Order";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
-const containerStyle = {
-    width: '400px',
-    height: '400px'
-};
-
-const center = {
-    lat: -3.745,
-    lng: -38.523
-};
 const Profile = () => {
 
     const [ordersList,setOrdersList] = useState([])
@@ -35,6 +25,8 @@ const Profile = () => {
     const [price,setPrice] = useState('')
     const [date,setDate] = useState('')
     const [comment,setComment] = useState('')
+
+    const router = useNavigate();
     const openModal = () => {
         setIsModalOpen(true);
     };
@@ -170,8 +162,33 @@ const Profile = () => {
 
     }
 
+    const checkUser = async () => {
+        const userData = localStorage.getItem("user");
+        if (userData) {
+            const parsedUserData = JSON.parse(userData);
+            const { id } = parsedUserData;
+
+            const response = await fetch('http://localhost:5177/checkUser',{
+                method:"POST",
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({userId:id})
+            })
+
+            const data = await response.json();
+
+            if(!data.success){
+                localStorage.removeItem("user")
+                router('/login')
+            }
+        }
+    }
+
     useEffect(() => {
-        getUserData()
+        checkUser().then(
+            getUserData()
+        )
     },[])
 
     return(
