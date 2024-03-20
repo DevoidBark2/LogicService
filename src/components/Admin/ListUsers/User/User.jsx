@@ -15,7 +15,7 @@ const User = () => {
     const [loading, setLoading] = useState(true);
 
     const getUserDetails = async () => {
-        const response = await fetch(`http://localhost:5177/getUserDetails?userId=${Number(userId)}`, {
+        const response = await fetch(`http://transport-service.somee.com/getUserDetails?userId=${Number(userId)}`, {
             method: "GET"
         });
 

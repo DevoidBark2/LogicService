@@ -14,7 +14,7 @@ const Order = () => {
 
 
     const getOrderDetails = async () => {
-        const response  = await fetch(`http://localhost:5177/getOrderDetails?orderId=${Number(orderId)}`,{
+        const response  = await fetch(`http://transport-service.somee.com/getOrderDetails?orderId=${Number(orderId)}`,{
             method:"GET",
         })
 
@@ -35,7 +35,7 @@ const Order = () => {
     }
 
     const deleteCarrierUser = async () => {
-        const response = await fetch(`http://localhost:5177/changeOrderAdmin`,{
+        const response = await fetch(`http://transport-service.somee.com/changeOrderAdmin`,{
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -53,7 +53,7 @@ const Order = () => {
     const changeOrder = async (e) => {
         e.preventDefault()
 
-        const response = await fetch(`http://localhost:5177/changeOrderAdmin`,{
+        const response = await fetch(`http://transport-service.somee.com/changeOrderAdmin`,{
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

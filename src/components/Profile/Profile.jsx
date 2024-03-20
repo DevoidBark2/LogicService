@@ -45,7 +45,7 @@ const Profile = () => {
             UserId: userId,
             roleUser: role
         }
-        const response = await fetch('http://localhost:5177/getUserData', {
+        const response = await fetch('http://transport-service.somee.com/getUserData', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -90,7 +90,7 @@ const Profile = () => {
                 email: email
             }
 
-            const response = await fetch('http://localhost:5177/saveUserData',{
+            const response = await fetch('http://transport-service.somee.com/saveUserData',{
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -143,7 +143,7 @@ const Profile = () => {
             userId: userId
         }
 
-        const response = await fetch('http://localhost:5177/createOrder',{
+        const response = await fetch('http://transport-service.somee.com/createOrder',{
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -168,7 +168,7 @@ const Profile = () => {
             const parsedUserData = JSON.parse(userData);
             const { id } = parsedUserData;
 
-            const response = await fetch('http://localhost:5177/checkUser',{
+            const response = await fetch('http://transport-service.somee.com/checkUser',{
                 method:"POST",
                 headers:{
                     'Content-Type': 'application/json'
