@@ -29,7 +29,7 @@ const ListOrders = () => {
         setCarrierUser(user);
     }
     const getAllOrders = async () => {
-        const response = await fetch('http://transport-service.somee.com/getOrders',{
+        const response = await fetch('https://transport-service.somee.com/getOrders',{
             method: "GET"
         })
 
@@ -57,7 +57,7 @@ const ListOrders = () => {
             comment: comment
         }
 
-        await fetch('http://transport-service.somee.com/addNewOrderAdmin',{
+        await fetch('https://transport-service.somee.com/addNewOrderAdmin',{
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

@@ -8,7 +8,7 @@ const ListOrders = () => {
     const [showDropdown, setShowDropdown] = useState(false);
 
     const getOrderData = async () => {
-        const response = await fetch("http://transport-service.somee.com/getAllOrders", {
+        const response = await fetch("https://transport-service.somee.com/getAllOrders", {
             method: "GET"
         });
 
@@ -25,7 +25,7 @@ const ListOrders = () => {
     }
 
     const sortOrders = async (sortByValue) => {
-        const response = await fetch(`http://transport-service.somee.com/sortOrders?sortBy=${sortByValue}`, {
+        const response = await fetch(`https://transport-service.somee.com/sortOrders?sortBy=${sortByValue}`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json'

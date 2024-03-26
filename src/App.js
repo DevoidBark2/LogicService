@@ -87,7 +87,7 @@ function App() {
             const parsedUserData = JSON.parse(userData);
             const { id } = parsedUserData;
 
-            const response = await fetch('http://transport-service.somee.com/checkUser',{
+            const response = await fetch('https://transport-service.somee.com/checkUser',{
                 method:"POST",
                 headers:{
                     'Content-Type': 'application/json'

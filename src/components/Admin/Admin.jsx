@@ -27,7 +27,7 @@ const Admin = () => {
     const [usersData, setUsersData] = useState([]);
     const [orders, setOrders] = useState([])
     const getAllData = async () => {
-        const response = await fetch('http://transport-service.somee.com/getAllData', {
+        const response = await fetch('https://transport-service.somee.com/getAllData', {
             method: "GET"
         });
 

@@ -31,7 +31,7 @@ const OrderDetails = () => {
 
     const getOrderData = async () => {
         setLoading(true)
-        const response = await fetch(`http://transport-service.somee.com/getOrderData?orderId=${orderId}`,{
+        const response = await fetch(`https://transport-service.somee.com/getOrderData?orderId=${orderId}`,{
             method: "GET",
             headers: {
                 headers: {
@@ -112,7 +112,7 @@ const OrderDetails = () => {
             userId: userId
         }
 
-        const response = await fetch('http://transport-service.somee.com/changeOrderData',{
+        const response = await fetch('https://transport-service.somee.com/changeOrderData',{
             method:"POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -139,7 +139,7 @@ const OrderDetails = () => {
             orderId: orderId
         }
 
-        const response = await fetch(`http://transport-service.somee.com/deleteOrder`,{
+        const response = await fetch(`https://transport-service.somee.com/deleteOrder`,{
             method:"POST",
             headers:{
                 'Content-Type': 'application/json'
@@ -160,7 +160,7 @@ const OrderDetails = () => {
             customerId : userId
         }
 
-        const response = await fetch("http://transport-service.somee.com/addNewOrder",{
+        const response = await fetch("https://transport-service.somee.com/addNewOrder",{
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -182,7 +182,7 @@ const OrderDetails = () => {
             carrierId: userId
         }
 
-        const response = await fetch("http://transport-service.somee.com/deleteCustomerOrder",{
+        const response = await fetch("https://transport-service.somee.com/deleteCustomerOrder",{
             method:"POST",
             headers: {
                 'Content-Type': 'application/json'

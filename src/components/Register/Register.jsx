@@ -42,7 +42,7 @@ const Register = () => {
             userRole: userType
         }
 
-        const response = await fetch('http://transport-service.somee.com/signup', {
+        const response = await fetch('https://transport-service.somee.com/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
