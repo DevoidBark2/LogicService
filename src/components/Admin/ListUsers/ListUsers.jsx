@@ -9,7 +9,7 @@ const ListUsers = () => {
     const [userId,setUserId] = useState(0)
     const router = useNavigate();
     const getAllUsers = async () => {
-        const response = await fetch('http://localhost:5177/getAllData',{
+        const response = await fetch('http://transport-service.somee.com/getAllData',{
             method: "GET"
         })
 
@@ -25,7 +25,7 @@ const ListUsers = () => {
         const requestBody = {
             userId : userId
         }
-        const response = await fetch("http://localhost:5177/deleteUser",{
+        const response = await fetch("http://transport-service.somee.com/deleteUser",{
             method:"POST",
             headers: {
                 'Content-Type': 'application/json'
