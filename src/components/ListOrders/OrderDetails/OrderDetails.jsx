@@ -49,9 +49,9 @@ const OrderDetails = () => {
             setComment(data.order.comment);
             setUserOrderId(data.order.userId);
             const customerData = data.user;
-            setCustomerData(`${customerData.firstName} ${customerData.lastName}`)
-            setCustomerPhone(customerData.phoneNumber)
-            if(data.carrierUser !== {}){
+            setCustomerData(`${customerData.firstName} ${customerData.secondName}`)
+            setCustomerPhone(customerData.phone)
+            if(data.carrierUser){
                 setCarrierUser({firstName: data.carrierUser.firstName, secondName: data.carrierUser.secondName,phone:  data.carrierUser.phone})
                 setCarrierId(data.carrierUser.id)
             }
@@ -67,6 +67,9 @@ const OrderDetails = () => {
             const orderDate = new Date(data.order.date);
             setDate(orderDate);
             setLoading(false)
+        }
+        else{
+            navigator.push("/profile")
         }
     }
 
@@ -332,8 +335,22 @@ const OrderDetails = () => {
                 </Modal.Footer>
             </Modal>
 
+            {!pathName.pathname.includes("/profile") && <nav aria-label="breadcrumb">
+                <ol className="breadcrumb">
+                    <li className="breadcrumb-item">
+                        <Link to="/" style={{ textDecoration: "none", color: "black", fontWeight: "700" }}>
+                            Все заказы
+                        </Link>
+                    </li>
+                    <li className="breadcrumb-item active" aria-current="page">
+                        Заказ #{orderId}
+                    </li>
+                </ol>
+            </nav>}
             <div className="d-flex justify-content-between order-details-block">
-               <div className="d-flex align-items-center">
+
+               <div className="d-flex align-items-center header-block-customer">
+
                    <h2>Детали заказа #{orderId}</h2>
                    {
                        !pathName.pathname.includes("/profile") && <div className="d-flex" style={{marginLeft:"10px"}}>
@@ -364,7 +381,7 @@ const OrderDetails = () => {
                 }
                 {
                     loading === false && (!carrierUser?.firstName && (userRole !== "admin" && (!pathName.pathname.includes('/profile') && userRole !== "logist"))) ?
-                    <button type="button" className="btn btn-warning" onClick={addNewOrder}>Взять заказ</button> : ''
+                    <button type="button" className="btn btn-warning get-order-btn" onClick={addNewOrder}>Взять заказ</button> : ''
                 }
                 {pathName.pathname.includes('/profile') && userRole === "logist" && <div className="d-flex align-items-center justify-content-end">
                     <button type="button" className="btn btn-warning" onClick={() => setIsModalOpen(true)}>Изменить</button>

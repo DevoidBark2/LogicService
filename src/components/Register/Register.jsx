@@ -50,15 +50,17 @@ const Register = () => {
             body: JSON.stringify(requestBody)
         });
 
-        if (!response.ok) {
-            const errorText = await response.text();
-            setError(errorText)
-        } else {
-            const data = await response.json();
-            localStorage.setItem("user",JSON.stringify(data))
-            navigate('/')
+        const data = await response.json();
+        if(data.errors && data.errors.password){
+            setError("Минимальная длина пароля 8 символов")
+            return;
         }
-
+        if(typeof data === "string"){
+            setError(data)
+            return;
+        }
+        localStorage.setItem("user",JSON.stringify(data))
+        navigate('/')
     }
 
     return(

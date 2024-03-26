@@ -59,7 +59,7 @@ const Profile = () => {
         setSecondName(data.userData.secondName)
         setEmail(data.userData.email)
         setPhone(data.userData.phone)
-        setUserRole(data.userData.userRole)
+        setUserRole(data.userData.role)
         setOrdersList(data.ordersData)
         setLoading(false)
     }
@@ -100,10 +100,9 @@ const Profile = () => {
 
             const data = await response.json();
 
-            if(data.success){
-                setResMessage({message: data.message, color: "alert-success"})
-                localStorage.setItem("user",JSON.stringify(data.userData))
-            }
+            setResMessage({message: "Данные успещно обновлены!", color: "alert-success"})
+            localStorage.setItem("user",JSON.stringify(data.userData))
+
             setTimeout(() => {
                 setResMessage({message:"",color: ""})
             },2000)
@@ -301,8 +300,8 @@ const Profile = () => {
                                     </Modal.Title>
                                 </Modal.Header>
                                 <Modal.Body>
-                                    <div className="d-flex justify-content-between mt-3 align-items-center">
-                                        <InputGroup className="mb-3 w-50">
+                                    <div className="d-flex justify-content-between mt-3 align-items-center modal-input-block">
+                                        <InputGroup className="mb-3 inputs-group">
                                             <InputGroup.Text id="basic-addon1" required><img src="/static/geo.svg" width={20} height={20} alt="Geo"/></InputGroup.Text>
                                             <Form.Control
                                                 placeholder="Точка А"
@@ -312,11 +311,12 @@ const Profile = () => {
                                                 onChange={(e) => setPointOne(e.target.value)}
                                             />
                                         </InputGroup>
-                                        <div className="d-flex flex-column move-truck-block">
+                                        <div className="flex-column move-truck-block">
                                             <img src="/static/truck.svg" alt="Иконка" className="truck-icon" width={40} height={40} />
                                             <hr style={{width:'350px',borderStyle:'dashed'}}/>
                                         </div>
-                                        <InputGroup className="mb-3 w-50">
+                                        <div className="w-25 space-input"></div>
+                                        <InputGroup className="mb-3 inputs-group">
                                             <InputGroup.Text id="basic-addon1" required={true}><img src="/static/geo.svg" width={20} height={20} alt="Geo"/></InputGroup.Text>
                                             <Form.Control
                                                 placeholder="Точка Б"
@@ -327,8 +327,8 @@ const Profile = () => {
                                             />
                                         </InputGroup>
                                     </div>
-                                    <div className="d-flex">
-                                        <InputGroup className="mb-3 w-50">
+                                    <div className="d-flex modal-input-block">
+                                        <InputGroup className="mb-3 inputs-group">
                                             <InputGroup.Text id="basic-addon1"  required><img src="/static/rubel-icon.svg" alt="Валюта" width={20} height={20}/></InputGroup.Text>
                                             <Form.Control
                                                 placeholder="Стоимость перевозки"
@@ -339,7 +339,7 @@ const Profile = () => {
                                             />
                                         </InputGroup>
                                         <div className="w-25"></div>
-                                        <Form.Group controlId="date" className="w-50" required>
+                                        <Form.Group controlId="date" className="inputs-group mb-3" required>
                                             <Form.Control
                                                 type="date"
                                                 name="date"

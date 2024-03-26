@@ -95,6 +95,11 @@ const Header = () => {
                                     <button className="btn btn-primary mt-3">
                                         <Link to="/profile" style={{textDecoration:"none",color:"white"}}  onClick={handleClose}>Посмотреть профиль</Link>
                                     </button>
+                                    {
+                                        admin && <button className="btn btn-primary mt-3">
+                                            <Link to="/admin" style={{textDecoration:"none",color:"white"}}  onClick={handleClose}>Админ панель</Link>
+                                        </button>
+                                    }
                                 </div>
                                 :
                                 <div className="d-flex justify-content-between">

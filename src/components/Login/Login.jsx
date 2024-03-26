@@ -45,7 +45,7 @@ const Login = () => {
                     <div className="form-group mb-2">
                         <label htmlFor="exampleInputEmail1">Email</label>
                         <input
-                            type="text"
+                            type="email"
                             className="form-control"
                             id="exampleInputEmail1"
                             aria-describedby="emailHelp"

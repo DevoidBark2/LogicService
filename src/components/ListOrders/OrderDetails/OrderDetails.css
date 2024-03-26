@@ -38,6 +38,24 @@
     .space-input{
         display: block;
     }
+    .customer-data{
+        margin-top: 10px;
+    }
+    .order-details-block{
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 768px) {
+    .customer-data{
+        font-size: 12px;
+    }
+    .header-block-customer{
+        flex-wrap: wrap;
+    }
+    .get-order-btn{
+        margin-top: 10px;
+    }
 }
 
 @media (max-width: 500px) {
