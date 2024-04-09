@@ -60,7 +60,8 @@ const Register = () => {
             return;
         }
         localStorage.setItem("user",JSON.stringify(data))
-        navigate('/')
+
+        window.location.href = '/profile'
     }
 
     return(

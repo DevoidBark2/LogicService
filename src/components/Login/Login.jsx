@@ -32,7 +32,7 @@ const Login = () => {
         } else {
             const data = await response.json();
             localStorage.setItem("user", JSON.stringify(data));
-            navigate('/');
+            window.location.href = '/profile'
         }
     };
 

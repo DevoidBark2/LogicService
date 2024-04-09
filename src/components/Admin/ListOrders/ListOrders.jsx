@@ -116,7 +116,6 @@ const ListOrders = () => {
                             <Link to={`${order.id}`}>
                                 <img src="/static/view_user.svg" alt="Посмотреть данные пользователя" width={30} height={30} style={{marginRight:"10px"}}/>
                             </Link>
-                            <img src="/static/delete_user.svg" alt="удалить данные пользователя" width={30} height={30}/>
                         </td>
                     </tr>
                 ))}
