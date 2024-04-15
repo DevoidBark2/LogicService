@@ -49,7 +49,7 @@ const ListOrders = () => {
 
     const handleSearchOrders = async (value) => {
         setSearchInput(value)
-        const response = await fetch(`http://localhost:5177/searchOrders?search=${value}`,
+        const response = await fetch(`https://transport-service.somee.com/searchOrders?search=${value}`,
            {
             method: "GET",
             headers: {
