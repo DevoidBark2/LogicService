@@ -2,10 +2,14 @@ import "./ListOrders.css";
 import Order from "../Order/Order";
 import {useEffect, useState} from "react";
 import {DropdownButton,Dropdown} from "react-bootstrap";
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+
 const ListOrders = () => {
     const [orders, setOrders] = useState([]);
     const [sortBy, setSortBy] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
+    const [searchInput,setSearchInput] = useState('')
 
     const getOrderData = async () => {
         const response = await fetch("https://transport-service.somee.com/getAllOrders", {
@@ -43,6 +47,22 @@ const ListOrders = () => {
         setShowDropdown(!showDropdown);
     };
 
+    const handleSearchOrders = async (value) => {
+        setSearchInput(value)
+        const response = await fetch(`http://localhost:5177/searchOrders?search=${value}`,
+           {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+           }
+        )
+        
+        const data = await response.json();
+
+        setOrders(data.orders);
+    }
+
     useEffect(() => {
         getOrderData();
     }, []);
@@ -51,6 +71,17 @@ const ListOrders = () => {
 
             <div className="d-flex justify-content-between mt-3 align-items-center">
                 <h1>Все заказы</h1>
+                <div style={{width:"400px"}}>
+                <InputGroup>
+                    <Form.Control
+                    placeholder="Поиск..."
+                    aria-label="Username"
+                    value={searchInput}
+                    onChange={(e) => handleSearchOrders(e.target.value)}
+                    aria-describedby="basic-addon1"
+                    />
+                </InputGroup>
+                </div>
                 <DropdownButton
                     align="end"
                     title="Сортировка"

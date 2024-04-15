@@ -402,7 +402,7 @@ const OrderDetails = () => {
                     <img src="/static/rubel-icon.svg" alt="Валюта" width={40} height={40}/>
                 </div>
                 <div className="d-flex border p-4 align-items-center justify-content-between">
-                    <h4>Дата прибытия: {date.toISOString().slice(0, 10)}</h4>
+                    <h4>Дата прибытия: {date.toLocaleDateString()}</h4>
                     <img src="/static/time.svg" alt="Время прибытия" width={40} height={40}/>
                 </div>
                 <div className="d-flex border p-4 flex-column">
@@ -415,10 +415,6 @@ const OrderDetails = () => {
                     </div>
                 </div>
             </div>
-            {/*<div className="d-flex justify-content-end align-items-center p-2">*/}
-            {/*    <span>14</span>*/}
-            {/*    <img src="/static/view-eye.svg" alt="Просмотры" width={20} height={20}/>*/}
-            {/*</div>*/}
         </div>
     );
 }
